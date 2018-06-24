@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".StadisticFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cvMes"
+            android:layout_margin="5dp"
+            app:cardCornerRadius="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mes"
+                    android:drawableLeft="@drawable/ic_date_range"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/txtTotalMes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: "
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/txtAltaMes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Prioridad Alta: "
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/colorRed"/>
+                <TextView
+                    android:id="@+id/txtMediaMes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Prioridad Media: "
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/colorYellow"/>
+                <TextView
+                    android:id="@+id/txtBajaMes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Prioridad Baja: "
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:layout_margin="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Año"
+                    android:drawableLeft="@drawable/ic_event_note"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/txtTotalAño"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: "
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:id="@+id/txtAltaAño"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Prioridad Alta: "
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/colorRed"/>
+                <TextView
+                    android:id="@+id/txtMediaAño"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Prioridad Media: "
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/colorYellow"/>
+                <TextView
+                    android:id="@+id/txtBajaAño"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:text="Prioridad Baja: "
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</FrameLayout>
