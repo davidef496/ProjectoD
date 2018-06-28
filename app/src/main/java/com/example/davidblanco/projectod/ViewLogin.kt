@@ -31,20 +31,16 @@ class ViewLogin :AppCompatActivity(), View.OnClickListener {
         if (task.isSuccessful) {
             Log.d(TAG, "signInWithEmail:success")
             val user = mAuth!!.getCurrentUser()
-            Toast.makeText(this, "Autentificacion Aprobada",
-                    Toast.LENGTH_SHORT).show()
             val i = Intent(applicationContext, ViewNavigation::class.java)//lanza la siguiente actividad
-            i.putExtra("Email","      dsd")
+            i.putExtra("Email",txtUsuario.text.toString())
             this.finish()
             startActivity(i)
-            //updateUI(user)
         } else {
             // If sign in fails, display a message to the user.
             Log.w(TAG, "signInWithEmail:failure", task.exception)
             pgsBar.visibility=View.GONE
             Toast.makeText(this, "Autenticacion fallida",
                     Toast.LENGTH_SHORT).show()
-            //updateUI(null)
         }
 
         // ...

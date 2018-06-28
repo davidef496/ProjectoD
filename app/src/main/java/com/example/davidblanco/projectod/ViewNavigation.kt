@@ -1,33 +1,29 @@
 package com.example.davidblanco.projectod
 
-import android.app.Fragment
+
 import android.app.FragmentManager
 import android.app.FragmentTransaction
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_view_navigation.*
 import kotlinx.android.synthetic.main.app_bar_view_navigation.*
-import kotlinx.android.synthetic.main.card_view_projects.*
-import kotlinx.android.synthetic.main.nav_header_view_navigation.*
 
 class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    var email: String? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_navigation)
         setSupportActionBar(toolbar)
-      val fm: android.support.v4.app.FragmentManager? =getSupportFragmentManager()
-       fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
-
+        email = intent.getStringExtra("Email")
+        val fm: android.support.v4.app.FragmentManager? = getSupportFragmentManager()
+        fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -62,14 +58,18 @@ class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
 
-        val fm: android.support.v4.app.FragmentManager? =getSupportFragmentManager()
+        val fm: android.support.v4.app.FragmentManager? = getSupportFragmentManager()
         when (item.itemId) {
 
             R.id.nav_project -> {
                 fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
             }
             R.id.nav_profile -> {
-                fm!!.beginTransaction().replace(R.id.container, ProfileFragment()).commit()
+                var second: ProfileFragment = ProfileFragment()
+                var bundle: Bundle = Bundle();
+                bundle.putString("Email", email)
+                second.setArguments(bundle)
+              fm!!.beginTransaction().replace(R.id.container, second).commit()
             }
             R.id.nav_stadistic -> {
                 fm!!.beginTransaction().replace(R.id.container, StadisticFragment()).commit()

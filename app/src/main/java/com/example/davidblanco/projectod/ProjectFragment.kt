@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_project.view.*
 import kotlinx.android.synthetic.main.project_dialog.view.*
 import java.util.*
 import android.support.v4.app.FragmentTransaction
-import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot

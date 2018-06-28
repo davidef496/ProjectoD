@@ -75,7 +75,5 @@
             android:background="@drawable/borde_redondo"
             android:drawableLeft="@drawable/ic_check_circle"
             android:paddingHorizontal="10dp"/>
-
-
     </LinearLayout>
 </RelativeLayout>
