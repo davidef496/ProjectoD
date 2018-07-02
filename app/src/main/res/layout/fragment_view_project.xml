@@ -22,6 +22,14 @@
             android:gravity="center"
             android:textColor="@color/colorGreen"
             android:maxLines="3"/>
+        <TextView
+            android:id="@+id/txtSchoolV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Escuela"
+            android:textSize="18dp"
+            android:textColor="@color/colorBlack"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -45,7 +53,11 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:orientation="horizontal">
-
+<Spinner
+    android:id="@+id/spLevel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+</Spinner>
             <Button
                 android:id="@+id/btnCheck2"
                 android:layout_width="wrap_content"
@@ -53,9 +65,9 @@
                 android:background="@drawable/borde_redondo"
                 android:drawableLeft="@drawable/ic_check_circle"
                 android:hint="Listo"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="15dp"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="22dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <Button
@@ -67,9 +79,9 @@
                 android:drawableLeft="@drawable/ic_delete_forever"
                 android:drawableTint="@color/colorWhite"
                 android:hint="Eliminar"
-                android:paddingHorizontal="10dp"
+                android:paddingHorizontal="5dp"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="22dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
 

@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.fragment_project.view.*
 import kotlinx.android.synthetic.main.project_dialog.view.*
 import java.util.*
 import android.support.v4.app.FragmentTransaction
+import android.util.Log
+import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
@@ -25,10 +27,15 @@ class ProjectFragment : Fragment(), View.OnClickListener {
     val myRef = database.getReference("Proyectos")
     private var projects: ArrayList<Project> = ArrayList<Project>()
     private var adapter: ProjectAdapter? = null
+    private var pro:Project= Project();
     override fun onClick(v: View?) {
         var bundle: Bundle = Bundle();
         bundle.putString("titulo", projects!!.get(recyclerView1.getChildAdapterPosition(v)).titulo)
         bundle.putString("descripcion", projects!!.get(recyclerView1.getChildAdapterPosition(v)).descripcion)
+        bundle.putString("key", projects!!.get(recyclerView1.getChildAdapterPosition(v)).key)
+        bundle.putString("escuela", projects!!.get(recyclerView1.getChildAdapterPosition(v)).escuela)
+        bundle.putString("fecha", projects!!.get(recyclerView1.getChildAdapterPosition(v)).fecha)
+        bundle.putInt("tipo", projects!!.get(recyclerView1.getChildAdapterPosition(v)).tipo)
         val fm: FragmentManager? = fragmentManager
         val fm2: FragmentTransaction? = fm!!.beginTransaction()
         var second: ViewProjectFragment = ViewProjectFragment()
@@ -55,7 +62,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
                 mAlertDialog.dismiss()
                 val titulo = mDialogView.etxtTitle.text.toString()
                 val descripcion = mDialogView.etxtDescripcion.text.toString()
-                projects!!.add(Project(titulo, descripcion, "escuela", obtenerFecha(), 0))
+                pro=Project(titulo, descripcion, "escuela", obtenerFecha(), 0)
                 EnviarProyecto()
                 leerDatos()
             }
@@ -67,11 +74,13 @@ class ProjectFragment : Fragment(), View.OnClickListener {
     }
 
     private fun EnviarProyecto() {
-        myRef.push().setValue(projects!!.get(projects!!.size - 1))
+        val key=myRef.push().key
+        pro=Project(key!!,pro.titulo,pro.descripcion,pro.escuela,pro.fecha,pro.tipo)
+        myRef.child(key).setValue(pro)
     }
 
     private fun leerDatos() {
-        myRef.addValueEventListener(object : ValueEventListener {
+        myRef.orderByChild("tipo").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }

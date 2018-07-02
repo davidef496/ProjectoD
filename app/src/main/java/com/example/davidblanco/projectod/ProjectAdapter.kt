@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Scroller
 import android.widget.TextView
 import kotlinx.android.synthetic.main.card_view_projects.view.*
@@ -25,6 +26,13 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
         holder.msjtitulo?.text = projectList[position].titulo
         holder.msjdescripcion?.text = projectList[position].descripcion
         holder.msjfecha?.text = projectList[position].fecha
+        if(projectList.get(position).tipo ==1){
+            holder.iPriorityLevel.setImageResource(R.drawable.ic_lens_red)
+        }else if(projectList.get(position).tipo ==2){
+            holder.iPriorityLevel.setImageResource(R.drawable.ic_lens_yelow)
+        }else if(projectList.get(position).tipo ==3){
+            holder.iPriorityLevel.setImageResource(R.drawable.ic_lens_green)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,5 +48,6 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
         val msjtitulo = itemView.findViewById<TextView>(R.id.txtNameP)
         val msjdescripcion = itemView.findViewById<TextView>(R.id.txtDescription)
         val msjfecha = itemView.findViewById<TextView>(R.id.txtFechaP)
+        val iPriorityLevel=itemView.findViewById<ImageView>(R.id.IpriorityLevel)
     }
 }

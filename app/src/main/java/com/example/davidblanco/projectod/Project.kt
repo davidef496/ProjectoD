@@ -1,4 +1,11 @@
 package com.example.davidblanco.projectod
 
-class Project(val titulo: String = "", val descripcion: String="", val escuela: String="", val fecha: String="", val tipo:Int=0) {
+class Project(  var key:String="" , var titulo: String = "", var descripcion: String="", val escuela: String="", val fecha: String="", var tipo:Int=0) {
+
+    constructor(titulo: String = "",descripcion: String="", escuela: String="", fecha: String="",tipo:Int=0):this("", titulo, descripcion, escuela, fecha, tipo){
+
+    }
+
+
+
 }
