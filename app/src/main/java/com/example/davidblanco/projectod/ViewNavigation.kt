@@ -3,7 +3,9 @@ package com.example.davidblanco.projectod
 
 import android.app.FragmentManager
 import android.app.FragmentTransaction
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -21,7 +23,8 @@ class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_navigation)
         setSupportActionBar(toolbar)
-        email = intent.getStringExtra("Email")
+        var sharedPreferences: SharedPreferences =getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        email = sharedPreferences.getString("email","email")
         val fm: android.support.v4.app.FragmentManager? = getSupportFragmentManager()
         fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
         val toggle = ActionBarDrawerToggle(
@@ -78,9 +81,13 @@ class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 fm!!.beginTransaction().replace(R.id.container, AboutFragment()).commit()
             }
             R.id.nav_signOff -> {
-                val viewProject = Intent(applicationContext, ViewLogin::class.java)//lanza la siguiente actividad
+                var sharedPreferences: SharedPreferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+                var editor: SharedPreferences.Editor = sharedPreferences.edit()
+                editor.putBoolean("sesion", false)
+                editor.commit()
+                val viewLogin = Intent(applicationContext, ViewLogin::class.java)//lanza la siguiente actividad
                 this.finish();
-                startActivity(viewProject)
+                startActivity(viewLogin)
             }
         }
 

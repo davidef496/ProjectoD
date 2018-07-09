@@ -26,6 +26,7 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
         holder.msjtitulo?.text = projectList[position].titulo
         holder.msjdescripcion?.text = projectList[position].descripcion
         holder.msjfecha?.text = projectList[position].fecha
+        holder.msjEscuela?.text = projectList[position].escuela
         if(projectList.get(position).tipo ==1){
             holder.iPriorityLevel.setImageResource(R.drawable.ic_lens_red)
         }else if(projectList.get(position).tipo ==2){
@@ -49,5 +50,6 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
         val msjdescripcion = itemView.findViewById<TextView>(R.id.txtDescription)
         val msjfecha = itemView.findViewById<TextView>(R.id.txtFechaP)
         val iPriorityLevel=itemView.findViewById<ImageView>(R.id.IpriorityLevel)
+        val msjEscuela=itemView.findViewById<TextView>(R.id.txtSchoolC)
     }
 }

@@ -1,6 +1,7 @@
 package com.example.davidblanco.projectod
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
+import android.content.SharedPreferences
 
 
 class ProjectFragment : Fragment(), View.OnClickListener {
@@ -27,7 +29,8 @@ class ProjectFragment : Fragment(), View.OnClickListener {
     val myRef = database.getReference("Proyectos")
     private var projects: ArrayList<Project> = ArrayList<Project>()
     private var adapter: ProjectAdapter? = null
-    private var pro:Project= Project();
+    private var pro: Project = Project();
+    var escuela:String=""
     override fun onClick(v: View?) {
         var bundle: Bundle = Bundle();
         bundle.putString("titulo", projects!!.get(recyclerView1.getChildAdapterPosition(v)).titulo)
@@ -52,6 +55,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
         adapter = ProjectAdapter(this.projects!!)
         view.recyclerView1.adapter = adapter
         adapter!!.setOnClickListener(this)
+        mostrar()
         leerDatos()
         view.fabtn.setOnClickListener {
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.project_dialog, null)
@@ -62,7 +66,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
                 mAlertDialog.dismiss()
                 val titulo = mDialogView.etxtTitle.text.toString()
                 val descripcion = mDialogView.etxtDescripcion.text.toString()
-                pro=Project(titulo, descripcion, "escuela", obtenerFecha(), 0)
+                pro = Project(titulo, descripcion, escuela, obtenerFecha(), 0)
                 EnviarProyecto()
                 leerDatos()
             }
@@ -73,9 +77,16 @@ class ProjectFragment : Fragment(), View.OnClickListener {
         return view
     }
 
+    private fun mostrar() {
+        var sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        escuela=sharedPreferences.getString("escuela","escuela")
+
+
+    }
+
     private fun EnviarProyecto() {
-        val key=myRef.push().key
-        pro=Project(key!!,pro.titulo,pro.descripcion,pro.escuela,pro.fecha,pro.tipo)
+        val key = myRef.push().key
+        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, pro.tipo)
         myRef.child(key).setValue(pro)
     }
 
@@ -84,6 +95,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {

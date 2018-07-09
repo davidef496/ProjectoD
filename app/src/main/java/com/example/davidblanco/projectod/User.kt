@@ -1,4 +1,4 @@
 package com.example.davidblanco.projectod
 
-class User(val nombre: String = "", val email: String = "", val escuela: String = "", val contraseña: String = "", val tipo: Int= 0) {
+class User(var nombre: String = "", var email: String = "", var escuela: String = "", var contraseña: String = "", var tipo: Int= 0) {
 }
