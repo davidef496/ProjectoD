@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">ProyectoD</string>
+    <string  name="app_name">Ciro-Pro</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Name User</string>
+    <string name="nav_header_title">Ciro-Pro</string>
     <string name="nav_header_subtitle">ProyectoD@example.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>

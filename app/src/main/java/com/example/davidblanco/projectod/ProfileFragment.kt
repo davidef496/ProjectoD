@@ -68,14 +68,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
             etxtName.setEnabled(true);
             etxtSchool.setEnabled(true);
             etxtPassword.setEnabled(true);
-            etxtPassword2.setEnabled(true);
         } else if (i == R.id.btnGuardar) {
             btnEditar.setVisibility(View.VISIBLE);
             btnGuardar.setVisibility(View.INVISIBLE);
             etxtName.setEnabled(false);
             etxtSchool.setEnabled(false);
             etxtPassword.setEnabled(false);
-            etxtPassword2.setEnabled(false);
         }
     }
 

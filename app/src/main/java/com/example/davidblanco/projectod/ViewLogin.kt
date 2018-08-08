@@ -82,6 +82,7 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
                 editor.putString("clave", user[0].contraseña)
                 editor.putString("escuela", user[0].escuela)
                 editor.putString("nombre", user[0].nombre)
+                editor.putInt("tipo", user[0].tipo)
                 editor.putBoolean("sesion", true)
                 editor.commit()
             }

@@ -30,6 +30,14 @@
             android:textSize="18dp"
             android:textColor="@color/colorBlack"
             />
+        <TextView
+            android:id="@+id/txtFechaV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha"
+            android:textSize="18dp"
+            android:textColor="@color/colorBlack"
+            />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -53,11 +61,14 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:orientation="horizontal">
-<Spinner
-    android:id="@+id/spLevel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-</Spinner>
+
+            <Spinner
+                android:id="@+id/spLevel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="4dp">
+
+            </Spinner>
             <Button
                 android:id="@+id/btnCheck2"
                 android:layout_width="wrap_content"
@@ -65,7 +76,7 @@
                 android:background="@drawable/borde_redondo"
                 android:drawableLeft="@drawable/ic_check_circle"
                 android:hint="Listo"
-                android:paddingHorizontal="15dp"
+                android:paddingHorizontal="5dp"
                 android:textColorHint="@color/colorWhite"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -84,7 +95,19 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
-
+        <Button
+            android:id="@+id/btnVolver2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/borde_redondo"
+            android:drawableTint="@color/colorWhite"
+            android:hint="Volver"
+            android:paddingHorizontal="5dp"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </RelativeLayout>

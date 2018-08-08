@@ -27,18 +27,23 @@ import android.content.SharedPreferences
 class ProjectFragment : Fragment(), View.OnClickListener {
     val database = FirebaseDatabase.getInstance()
     val myRef = database.getReference("Proyectos")
+    val myRef2 = database.getReference("Avisos")
     private var projects: ArrayList<Project> = ArrayList<Project>()
+    private var project: ArrayList<Project> = ArrayList<Project>()
     private var adapter: ProjectAdapter? = null
     private var pro: Project = Project();
-    var escuela:String=""
+    var escuela: String = ""
+    var tipo = 1
+    var email: String = ""
     override fun onClick(v: View?) {
         var bundle: Bundle = Bundle();
         bundle.putString("titulo", projects!!.get(recyclerView1.getChildAdapterPosition(v)).titulo)
         bundle.putString("descripcion", projects!!.get(recyclerView1.getChildAdapterPosition(v)).descripcion)
         bundle.putString("key", projects!!.get(recyclerView1.getChildAdapterPosition(v)).key)
         bundle.putString("escuela", projects!!.get(recyclerView1.getChildAdapterPosition(v)).escuela)
-        bundle.putString("fecha", projects!!.get(recyclerView1.getChildAdapterPosition(v)).fecha)
+        bundle.putInt("fecha", projects!!.get(recyclerView1.getChildAdapterPosition(v)).fecha)
         bundle.putInt("tipo", projects!!.get(recyclerView1.getChildAdapterPosition(v)).tipo)
+        bundle.putString("email", projects!!.get(recyclerView1.getChildAdapterPosition(v)).email)
         val fm: FragmentManager? = fragmentManager
         val fm2: FragmentTransaction? = fm!!.beginTransaction()
         var second: ViewProjectFragment = ViewProjectFragment()
@@ -55,8 +60,12 @@ class ProjectFragment : Fragment(), View.OnClickListener {
         adapter = ProjectAdapter(this.projects!!)
         view.recyclerView1.adapter = adapter
         adapter!!.setOnClickListener(this)
-        mostrar()
-        leerDatos()
+        mostrarDatos()
+        if (tipo == 0) {
+            leerDatos()
+        } else {
+            leerDatos2()
+        }
         view.fabtn.setOnClickListener {
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.project_dialog, null)
             val mBuilder = AlertDialog.Builder(context).setView(mDialogView)
@@ -66,9 +75,14 @@ class ProjectFragment : Fragment(), View.OnClickListener {
                 mAlertDialog.dismiss()
                 val titulo = mDialogView.etxtTitle.text.toString()
                 val descripcion = mDialogView.etxtDescripcion.text.toString()
-                pro = Project(titulo, descripcion, escuela, obtenerFecha(), 0)
-                EnviarProyecto()
-                leerDatos()
+                pro = Project(titulo, descripcion, escuela, obtenerFecha(), 0, email)
+                if (tipo == 0) {
+                    EnviarProyecto2()
+                    leerDatos()
+                } else {
+                    EnviarProyecto()
+                    leerDatos2()
+                }
             }
             mDialogView.btncancel.setOnClickListener {
                 mAlertDialog.dismiss()
@@ -77,40 +91,102 @@ class ProjectFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-    private fun mostrar() {
+    private fun EnviarProyecto2() {
+
+        val key = myRef2.push().key
+        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, 1, pro.email)
+        myRef2.child(key).setValue(pro)
+    }
+
+    private fun mostrarDatos() {
         var sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
-        escuela=sharedPreferences.getString("escuela","escuela")
-
-
+        escuela = sharedPreferences.getString("escuela", "escuela")
+        tipo = sharedPreferences.getInt("tipo", 1)
+        email = sharedPreferences.getString("email", "escuela")
     }
 
     private fun EnviarProyecto() {
         val key = myRef.push().key
-        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, pro.tipo)
+        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, pro.tipo, pro.email)
         myRef.child(key).setValue(pro)
+
     }
 
     private fun leerDatos() {
-        myRef.orderByChild("tipo").addValueEventListener(object : ValueEventListener {
+        myRef2.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-
+                Toast.makeText(context, " " + "No es posible actualizar los datos",
+                        Toast.LENGTH_SHORT).show()
             }
-
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                     projects!!.add(pjt)
                 }
-                adapter!!.notifyDataSetChanged()
 
+
+            }
+        })
+        myRef.orderByChild("tipo").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(context, " " + "No es posible actualizar los datos",
+                        Toast.LENGTH_SHORT).show()
+            }
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (snapshot: DataSnapshot in dataSnapshot.children) {
+                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                        projects.add(pjt)
+                }
+                adapter!!.notifyDataSetChanged()
             }
         })
     }
 
-    private fun obtenerFecha(): String {
+    private fun leerDatos2() {
+        myRef2.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(context, " " + "No es posible actualizar los datos",
+                        Toast.LENGTH_SHORT).show()
+            }
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                projects.removeAll(projects)
+                for (snapshot: DataSnapshot in dataSnapshot.children) {
+                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    projects!!.add(pjt)
+                }
+
+
+            }
+        })
+        myRef.orderByChild("email").equalTo(email).addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(context, " " + "No es posible actualizar los datos",
+                        Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot: DataSnapshot in dataSnapshot.children) {
+                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    projects!!.add(pjt)
+                }
+                adapter!!.notifyDataSetChanged()
+            }
+        })
+
+    }
+
+    private fun obtenerFecha(): Int {
         val c = Calendar.getInstance()
-        var fecha = "" + c.get(Calendar.DAY_OF_MONTH) + "- " + (c.get(Calendar.MONTH) + 1) + "- " + c.get(Calendar.YEAR);
+        var f: String = "" + c.get(Calendar.YEAR)
+        if (c.get(Calendar.MONTH) + 1 < 10) {
+            f = f + "0" + (c.get(Calendar.MONTH) + 1)
+        }
+        if (c.get(Calendar.DAY_OF_MONTH) < 10) {
+            f = f + "0" + c.get(Calendar.DAY_OF_MONTH)
+        }
+        val fecha = Integer.parseInt(f)
         return fecha;
     }
 
