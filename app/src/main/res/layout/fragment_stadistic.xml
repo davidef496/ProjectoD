@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total: --"
-                    android:textSize="20dp"
+                    android:textSize="21dp"
                     android:textStyle="bold"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"/>
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:text="Prioridad Alta: -- "
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_chevron_right"
@@ -53,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:text="Prioridad Media: --"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_chevron_right"
@@ -63,10 +63,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:text="Prioridad Baja: --"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_chevron_right"
+                    />
+                <TextView
+                    android:id="@+id/txtNullMes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:text="Prioridad Baja: --"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/cardview_shadow_start_color"
                     />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -93,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total: --"
-                    android:textSize="20dp"
+                    android:textSize="21dp"
                     android:textStyle="bold"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"/>
@@ -102,7 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:text="Prioridad Alta: --"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_chevron_right"
@@ -112,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:text="Prioridad Media: --"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_chevron_right"
@@ -122,38 +133,100 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:textSize="17dp"
                     android:text="Prioridad Baja: --"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_chevron_right"
+                    />
+                <TextView
+                    android:id="@+id/txtNullAño"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:text="Sin Prioridad: --"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_chevron_right"
+                    android:drawableTint="@color/cardview_shadow_start_color"
                     />
             </LinearLayout>
         </android.support.v7.widget.CardView>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center">
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Fecha Inicial"
-                android:layout_marginRight="20dp"/>
+                android:hint="DD"
+                android:maxLength="2"
+                android:inputType="number"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="20dp"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Fecha Fin"
-                android:layout_marginRight="10dp"/>
-            <Button
+                android:hint="MM"
+                android:maxLength="2"
+                android:inputType="number"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Generar Informe"
-                android:background="@drawable/borde_redondo"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:textColorHint="@color/colorWhite"
-                android:paddingHorizontal="10dp"/>
+                android:text="/"
+                android:textSize="20dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="AAAA"
+                android:layout_marginRight="20dp"
+                android:maxLength="4"
+                android:inputType="number"/>
 
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="DD"
+                android:maxLength="2"
+                android:inputType="number" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="20dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="MM"
+                android:maxLength="2"
+                android:inputType="number"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="20dp"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="AAAA"
+                android:layout_marginRight="10dp"
+                android:maxLength="4"
+                android:inputType="number"
+                />
         </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Generar Informe"
+            android:background="@drawable/borde_redondo"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColorHint="@color/colorWhite"
+            android:paddingHorizontal="10dp"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </FrameLayout>

@@ -70,7 +70,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
             builder.setTitle("Eliminar proyecto")
                     .setMessage("¿Desea eliminar este proyecto de forma definitiva?")
             builder.setPositiveButton("SI") { dialog, which ->
-                deleteElements(prj.key)
+                deleteElements(prj)
                 dialog.dismiss()
             }
             builder.setNegativeButton("NO") { dialog, which ->
@@ -88,17 +88,17 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
     private fun moveElements() {
         val key = myRef2.push().key
         key2 = prj.key
-        prj = Project(key!!, prj.titulo, prj.descripcion, prj.escuela, prj.fecha, prj.tipo, prj.email, prj.comentario)
+        val prj2 = Project(key!!, prj.titulo, prj.descripcion, prj.escuela, prj.fecha, prj.tipo, prj.email, prj.comentario)
 
-        myRef2.child(key).setValue(prj)
-        deleteElements(key2)
+        myRef2.child(key).setValue(prj2)
+        deleteElements(prj)
     }
 
-    private fun deleteElements(key: String) {
-        if(tipo==1) {
-            myRef.child(key).removeValue()
+    private fun deleteElements(pj: Project) {
+        if(!pj.escuela.equals("Departamento de educación")) {
+            myRef.child(pj.key).removeValue()
         }else{
-            myRef3.child(key).removeValue()
+            myRef3.child(pj.key).removeValue()
         }
         volverAtras();
     }
@@ -108,7 +108,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
         fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
     }
 
-    var arrayLevel = arrayOf("Select", "Alto", "Medio", "Bajo");
+    val arrayLevel = arrayOf("Select", "Alto", "Medio", "Bajo");
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -122,10 +122,10 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
                 bundle!!.getString("escuela"), bundle!!.getInt("fecha"), bundle!!.getInt("tipo"), bundle!!.getString("email"))
         view.txtViewT.setText(prj.titulo)
         view.txtViewD.setText(prj.descripcion)
-        view.txtSchoolV.setText("Escuela: " + prj.escuela)
-        view.txtFechaV.setText("Fecha: " + dateForrmat(prj.fecha))
+        view.txtSchoolV.setText(prj.escuela)
+        view.txtFechaV.setText("Fecha: " + dateFormat(prj.fecha))
         mostrarDatos()
-        if (prj.escuela.equals("Departmento de educacion")) {
+        if (prj.escuela.equals("Departamento de educación")) {
             if(tipo == 0) {
                 view.btnDelete2.visibility = View.VISIBLE
             }else {
@@ -162,7 +162,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
         return view
     }
 
-    private fun dateForrmat(fecha: Int): String {
+    private fun dateFormat(fecha: Int): String {
         val cadena = "" + fecha
         val d = cadena.toCharArray()
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +

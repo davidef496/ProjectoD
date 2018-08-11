@@ -25,7 +25,7 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.msjtitulo?.text = projectList[position].titulo
         holder.msjdescripcion?.text = projectList[position].descripcion
-        holder.msjfecha?.text = "" + dateForrmat(projectList[position].fecha)
+        holder.msjfecha?.text = dateForrmat(projectList[position].fecha)
         holder.msjEscuela?.text = projectList[position].escuela
         if (projectList.get(position).tipo == 0) {
             holder.iPriorityLevel.setImageResource(R.drawable.ic_lens_white)
@@ -57,7 +57,7 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
 
     private fun dateForrmat(fecha: Int): String {
         val cadena = "" + fecha
-        val d = cadena.toCharArray()
+        cadena.toCharArray()
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +
                 cadena[5].toString() + "-" + cadena[0].toString() + cadena[1].toString() +
                 cadena[2].toString() + cadena[3].toString();

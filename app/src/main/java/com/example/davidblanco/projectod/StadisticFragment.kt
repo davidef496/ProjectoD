@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.fragment_stadistic.*
+import kotlinx.android.synthetic.main.fragment_stadistic.view.*
 import java.util.*
 
 
@@ -25,28 +26,29 @@ class StadisticFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
+        val v = inflater.inflate(R.layout.fragment_stadistic, container, false)
         mostrarDatos()
         if (tipo == 0) {
-            datosAnuales()
-            datosMes()
+            datosAnuales(v)
+            datosMes(v)
         } else {
-            datosAnuales2()
-            datosMes2()
+            datosAnuales2(v)
+            datosMes2(v)
         }
-        return inflater.inflate(R.layout.fragment_stadistic, container, false)
+        return v
     }
 
-    private fun datosMes2() {
+    private fun datosMes2(v: View) {
         val c = Calendar.getInstance()
-        var contA = 0;
-        var contM = 0;
-        var contB = 0;
+
         var fechaI = "" + c.get(Calendar.YEAR)
         var fechaF = "" + c.get(Calendar.YEAR)
         if (c.get(Calendar.MONTH) + 1 < 10) {
             fechaI = fechaI + "0" + (c.get(Calendar.MONTH) + 1)
             fechaF = fechaF + "0" + (c.get(Calendar.MONTH) + 1)
+        } else {
+            fechaI = fechaI + (c.get(Calendar.MONTH) + 1)
+            fechaF = fechaF + (c.get(Calendar.MONTH) + 1)
         }
         val fechaI2 = Integer.parseInt(fechaI + "01")
         val fechaF2 = Integer.parseInt(fechaF + "31")
@@ -57,6 +59,10 @@ class StadisticFragment : Fragment() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var contA = 0;
+                var contM = 0;
+                var contB = 0;
+                var contN = 0;
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.fecha >= fechaI2 && pjt.fecha <= fechaF2) {
@@ -66,26 +72,27 @@ class StadisticFragment : Fragment() {
                             contM++;
                         } else if (pjt.tipo == 3) {
                             contB++;
+                        } else {
+                            contN++;
                         }
                     }
                 }
-                Toast.makeText(context, " " + "Datos actualizados" + contA,
-                        Toast.LENGTH_SHORT).show()
-                txtAltaMes.setText("Prioridad Alta: " + contA)
-                txtMediaMes.setText("Prioridad Media: " + contM)
-                txtBajaMes.setText("Prioridad Baja: " + contB)
-                txtTotalMes.setText("Total: " + (contA + contB + contM))
+                v.txtAltaMes.setText("Prioridad Alta: " + contA)
+                v.txtMediaMes.setText("Prioridad Media: " + contM)
+                v.txtBajaMes.setText("Prioridad Baja: " + contB)
+                v.txtNullMes.setText("Sin Prioridad: " + contN)
+                v.txtTotalMes.setText("Total: " + (contA + contB + contM + contN))
             }
         })
     }
 
-    private fun datosAnuales2() {
+    private fun datosAnuales2(v: View) {
         val c = Calendar.getInstance()
-        var contA = 0;
-        var contM = 0;
-        var contB = 0;
+
         val fechaI = Integer.parseInt("" + c.get(Calendar.YEAR) + "0101")
         val fechaF = Integer.parseInt("" + c.get(Calendar.YEAR) + "1231")
+        Toast.makeText(context, " " + escuela,
+                Toast.LENGTH_SHORT).show()
         myRef.orderByChild("escuela").equalTo(escuela).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(context, " " + "No es posible actualizar los datos",
@@ -93,6 +100,10 @@ class StadisticFragment : Fragment() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var contA = 0;
+                var contM = 0;
+                var contB = 0;
+                var contN = 0;
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.fecha >= fechaI && pjt.fecha <= fechaF) {
@@ -102,27 +113,31 @@ class StadisticFragment : Fragment() {
                             contM++;
                         } else if (pjt.tipo == 3) {
                             contB++;
+                        } else {
+                            contN++;
                         }
                     }
                 }
-                txtAltaAño.setText("Prioridad Alta: " + contA)
-                txtMediaAño.setText("Prioridad Media: " + contM)
-                txtBajaAño.setText("Prioridad Baja: " + contB)
-                txtTotalAño.setText("Total: " + (contA + contB + contM))
+                v.txtAltaAño.setText("Prioridad Alta: " + contA)
+                v.txtMediaAño.setText("Prioridad Media: " + contM)
+                v.txtBajaAño.setText("Prioridad Baja: " + contB)
+                v.txtNullAño.setText("Sin Prioridad: " + contN)
+                v.txtTotalAño.setText("Total: " + (contA + contB + contM + contN))
             }
         })
     }
 
-    private fun datosMes() {
+    private fun datosMes(v: View) {
         val c = Calendar.getInstance()
-        var contA = 0;
-        var contM = 0;
-        var contB = 0;
+
         var fechaI = "" + c.get(Calendar.YEAR)
         var fechaF = "" + c.get(Calendar.YEAR)
         if (c.get(Calendar.MONTH) + 1 < 10) {
             fechaI = fechaI + "0" + (c.get(Calendar.MONTH) + 1)
             fechaF = fechaF + "0" + (c.get(Calendar.MONTH) + 1)
+        } else {
+            fechaI = fechaI + (c.get(Calendar.MONTH) + 1)
+            fechaF = fechaF + (c.get(Calendar.MONTH) + 1)
         }
         val fechaI2 = Integer.parseInt(fechaI + "00").toDouble()
         val fechaF2 = Integer.parseInt(fechaF + "32").toDouble()
@@ -133,6 +148,10 @@ class StadisticFragment : Fragment() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var contA = 0;
+                var contM = 0;
+                var contB = 0;
+                var contN = 0;
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.tipo == 1) {
@@ -141,21 +160,22 @@ class StadisticFragment : Fragment() {
                         contM++;
                     } else if (pjt.tipo == 3) {
                         contB++;
+                    } else {
+                        contN++;
                     }
                 }
-                txtAltaMes.setText("Prioridad Alta: " + contA)
-                txtMediaMes.setText("Prioridad Media: " + contM)
-                txtBajaMes.setText("Prioridad Baja: " + contB)
-                txtTotalMes.setText("Total: " + (contA + contB + contM))
+                v.txtAltaMes.setText("Prioridad Alta: " + contA)
+                v.txtMediaMes.setText("Prioridad Media: " + contM)
+                v.txtBajaMes.setText("Prioridad Baja: " + contB)
+                v.txtNullMes.setText("Sin Prioridad: " + contN)
+                v.txtTotalMes.setText("Total: " + (contA + contB + contM + contN))
             }
         })
     }
 
-    private fun datosAnuales() {
+    private fun datosAnuales(v: View) {
         val c = Calendar.getInstance()
-        var contA = 0;
-        var contM = 0;
-        var contB = 0;
+
         val fechaI = Integer.parseInt("" + c.get(Calendar.YEAR) + "0000").toDouble()
         val fechaF = Integer.parseInt("" + c.get(Calendar.YEAR) + "1332").toDouble()
         myRef.orderByChild("fecha").startAt(fechaI).endAt(fechaF).addValueEventListener(object : ValueEventListener {
@@ -165,6 +185,10 @@ class StadisticFragment : Fragment() {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var contA = 0;
+                var contM = 0;
+                var contB = 0;
+                var contN = 0;
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.tipo == 1) {
@@ -173,12 +197,15 @@ class StadisticFragment : Fragment() {
                         contM++;
                     } else if (pjt.tipo == 3) {
                         contB++;
+                    } else {
+                        contN++;
                     }
                 }
-                txtAltaAño.setText("Prioridad Alta: " + contA)
-                txtMediaAño.setText("Prioridad Media: " + contM)
-                txtBajaAño.setText("Prioridad Baja: " + contB)
-                txtTotalAño.setText("Total: " + (contA + contB + contM))
+                v.txtAltaAño.setText("Prioridad Alta: " + contA)
+                v.txtMediaAño.setText("Prioridad Media: " + contM)
+                v.txtBajaAño.setText("Prioridad Baja: " + contB)
+                v.txtNullAño.setText("Sin Prioridad: " + contN)
+                v.txtTotalAño.setText("Total: " + (contA + contB + contM + contN))
             }
         })
     }

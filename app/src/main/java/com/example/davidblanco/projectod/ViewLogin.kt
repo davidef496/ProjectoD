@@ -76,6 +76,7 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     pjt = snapshot.getValue(User::class.java)!!
                     user.add(pjt)
+                    Log.d(TAG, "email: "+pjt.email)
                 }
 
                 editor.putString("email", user[0].email)
@@ -85,6 +86,7 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
                 editor.putInt("tipo", user[0].tipo)
                 editor.putBoolean("sesion", true)
                 editor.commit()
+
             }
         })
     }

@@ -94,7 +94,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
     private fun EnviarProyecto2() {
 
         val key = myRef2.push().key
-        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, 1, pro.email)
+        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, 1, pro.email,"")
         myRef2.child(key).setValue(pro)
     }
 
@@ -107,7 +107,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
 
     private fun EnviarProyecto() {
         val key = myRef.push().key
-        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, pro.tipo, pro.email)
+        pro = Project(key!!, pro.titulo, pro.descripcion, pro.escuela, pro.fecha, pro.tipo, pro.email,"")
         myRef.child(key).setValue(pro)
 
     }
@@ -153,8 +153,10 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
-                    projects!!.add(pjt)
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
+
+
+                  projects!!.add(pjt)
                 }
 
 
@@ -167,9 +169,11 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
-                    projects!!.add(pjt)
+                for(snapshot: DataSnapshot in dataSnapshot.children) {
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
+                    Log.d("PROJECTFRAGMENT", "PRJ")
+                   projects!!.add(pjt)
+
                 }
                 adapter!!.notifyDataSetChanged()
             }
@@ -182,9 +186,13 @@ class ProjectFragment : Fragment(), View.OnClickListener {
         var f: String = "" + c.get(Calendar.YEAR)
         if (c.get(Calendar.MONTH) + 1 < 10) {
             f = f + "0" + (c.get(Calendar.MONTH) + 1)
+        }else{
+            f = f + (c.get(Calendar.MONTH) + 1)
         }
         if (c.get(Calendar.DAY_OF_MONTH) < 10) {
             f = f + "0" + c.get(Calendar.DAY_OF_MONTH)
+        }else{
+            f = f + c.get(Calendar.DAY_OF_MONTH)
         }
         val fecha = Integer.parseInt(f)
         return fecha;
