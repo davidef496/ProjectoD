@@ -123,7 +123,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
         view.txtViewT.setText(prj.titulo)
         view.txtViewD.setText(prj.descripcion)
         view.txtSchoolV.setText(prj.escuela)
-        view.txtFechaV.setText("Fecha: " + dateFormat(prj.fecha))
+        view.txtFechaV.setText(dateFormat(prj.fecha))
         mostrarDatos()
         if (prj.escuela.equals("Departamento de educación")) {
             if(tipo == 0) {

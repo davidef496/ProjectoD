@@ -26,9 +26,11 @@
             android:id="@+id/txtSchoolV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Escuela"
+            android:text="Establecimiento"
             android:textSize="18dp"
             android:textColor="@color/colorBlack"
+            android:drawableLeft="@drawable/ic_account_balance"
+            android:drawableTint="@color/colorGreen"
             android:textStyle="bold"
             />
         <TextView
@@ -37,6 +39,8 @@
             android:layout_height="wrap_content"
             android:text="Fecha"
             android:textSize="18dp"
+            android:drawableLeft="@drawable/ic_event_note"
+            android:drawableTint="@color/colorGreen"
             android:textColor="@color/colorBlack"
             />
 
