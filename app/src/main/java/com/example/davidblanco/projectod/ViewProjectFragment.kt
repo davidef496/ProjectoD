@@ -1,10 +1,9 @@
 package com.example.davidblanco.projectod
 
 import android.app.AlertDialog
-import android.app.FragmentManager
+
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -13,25 +12,20 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.fragment_view_project.*
 import kotlinx.android.synthetic.main.fragment_view_project.view.*
-import android.content.DialogInterface
-import android.net.sip.SipSession
 import kotlinx.android.synthetic.main.comment_dialog.view.*
-import kotlinx.android.synthetic.main.project_dialog.view.*
+
 
 
 class ViewProjectFragment : Fragment(), View.OnClickListener {
-    val database = FirebaseDatabase.getInstance()
-    val myRef = database.getReference("Proyectos")
-    val myRef2 = database.getReference("ProyectosReady")
-    val myRef3 = database.getReference("Avisos")
-    var prj: Project = Project();
-    var key2: String = "";
-    var tipo: Int = 0;
+    private val database = FirebaseDatabase.getInstance()
+    private val myRef = database.getReference("Proyectos")
+    private val myRef2 = database.getReference("ProyectosReady")
+    private val myRef3 = database.getReference("Avisos")
+    private var prj: Project = Project()
+    private var key2: String = ""
+    private var tipo: Int = 0
     override fun onClick(v: View?) {
         val i = v!!.getId()
         if (i == R.id.btnCheck2) {
@@ -100,7 +94,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
         }else{
             myRef3.child(pj.key).removeValue()
         }
-        volverAtras();
+        volverAtras()
     }
 
     private fun volverAtras() {
@@ -108,18 +102,18 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
         fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
     }
 
-    val arrayLevel = arrayOf("Select", "Alto", "Medio", "Bajo");
+    val arrayLevel = arrayOf("Select", "Alto", "Medio", "Bajo")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_view_project, container, false)
+        val view = inflater.inflate(R.layout.fragment_view_project, container, false)
         view.btnCheck2.setOnClickListener(this)
         view.btnDelete2.setOnClickListener(this)
         view.btnVolver2.setOnClickListener(this)
-        var bundle = getArguments()
-        prj = Project(bundle!!.getString("key"), bundle!!.getString("titulo"), bundle!!.getString("descripcion"),
-                bundle!!.getString("escuela"), bundle!!.getInt("fecha"), bundle!!.getInt("tipo"), bundle!!.getString("email"))
+        val bundle = getArguments()
+        prj = Project(bundle!!.getString("key"), bundle.getString("titulo"), bundle.getString("descripcion"),
+                bundle.getString("escuela"), bundle.getInt("fecha"), bundle.getInt("tipo"), bundle.getString("email"))
         view.txtViewT.setText(prj.titulo)
         view.txtViewD.setText(prj.descripcion)
         view.txtSchoolV.setText(prj.escuela)
@@ -139,8 +133,8 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
             view.btnDelete2.visibility = View.VISIBLE
             view.btnCheck2.visibility = View.VISIBLE
             view.spLevel.visibility = View.VISIBLE
-            var spinner = view.findViewById(R.id.spLevel) as Spinner
-            var arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, arrayLevel)
+            val spinner = view.findViewById(R.id.spLevel) as Spinner
+            val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, arrayLevel)
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = arrayAdapter
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -164,14 +158,14 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
 
     private fun dateFormat(fecha: Int): String {
         val cadena = "" + fecha
-        val d = cadena.toCharArray()
+       cadena.toCharArray()
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +
                 cadena[5].toString() + "-" + cadena[0].toString() + cadena[1].toString() +
-                cadena[2].toString() + cadena[3].toString();
+                cadena[2].toString() + cadena[3].toString()
     }
 
     private fun mostrarDatos() {
-        var sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
         tipo = sharedPreferences.getInt("tipo", 1)
 
 

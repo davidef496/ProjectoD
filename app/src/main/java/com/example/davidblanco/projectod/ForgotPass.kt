@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_forgot_pass.*
-import kotlinx.android.synthetic.main.login_view.*
+
 
 class ForgotPass : AppCompatActivity(), View.OnClickListener  {
     private var mAuth: FirebaseAuth? = null
@@ -39,7 +39,7 @@ class ForgotPass : AppCompatActivity(), View.OnClickListener  {
         setContentView(R.layout.activity_forgot_pass)
         mAuth = FirebaseAuth.getInstance()
     }
-    fun validar():Boolean{
+    private fun validar():Boolean{
         var valid = true
 
         val email = txtEmailForgot.text.toString()

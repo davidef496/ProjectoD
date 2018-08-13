@@ -18,19 +18,18 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.ArrayList
-import kotlin.math.log
 
 
 class ViewLogin : AppCompatActivity(), View.OnClickListener {
-    private var TAG = "Login Activity---->"
+    private val TAG = "Login Activity"
     private var mAuth: FirebaseAuth? = null
     private var user: ArrayList<User> = ArrayList<User>()
-    val database = FirebaseDatabase.getInstance()
-    val myRef = database.getReference("Usuarios")
+    private val database = FirebaseDatabase.getInstance()
+    private val myRef = database.getReference("Usuarios")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_view)
-        var sharedPreferences: SharedPreferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
         if (sharedPreferences.getBoolean("sesion", false)) {
             val i = Intent(applicationContext, ViewNavigation::class.java)//lanza la siguiente actividad
             this.finish()
@@ -41,11 +40,11 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
         cBoxShow.setOnClickListener(this)
     }
 
-    private fun LogearUsuario() {
+    private fun logearUsuario() {
         mAuth!!.signInWithEmailAndPassword(txtUsuario.text.toString(), txtClave.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        guardarDatos();
+                        guardarDatos()
                         Log.d(TAG, "signInWithEmail:success")
                     } else {
                         // If sign in fails, display a message to the user.
@@ -60,10 +59,9 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun guardarDatos() {
-        var sharedPreferences: SharedPreferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
-        var editor: SharedPreferences.Editor = sharedPreferences.edit()
-        var pjt: User;
-        var query = myRef.orderByChild("email").equalTo(txtUsuario.text.toString())
+        val sharedPreferences: SharedPreferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        val query = myRef.orderByChild("email").equalTo(txtUsuario.text.toString())
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
@@ -71,10 +69,10 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 user.removeAll(user)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    pjt = snapshot.getValue(User::class.java)!!
+                   val pjt = snapshot.getValue(User::class.java)!!
                     user.add(pjt)
                     editor.putString("email", pjt.email)
-                    editor.putString("clave", pjt.contraseña)
+                    editor.putString("clave", pjt.password)
                     editor.putString("escuela", pjt.escuela)
                     editor.putString("nombre", pjt.nombre)
                     editor.putInt("tipo", pjt.tipo)
@@ -94,14 +92,14 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
         val i = view!!.getId()
         if (i == R.id.cBoxShow) {
             if (!cBoxShow.isChecked) {
-                txtClave.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                txtClave.setTransformationMethod(PasswordTransformationMethod.getInstance())
             } else {
-                txtClave.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                txtClave.setTransformationMethod(HideReturnsTransformationMethod.getInstance())
             }
         } else if (i == R.id.btnLogin) {
             if (validateForm()) {
                 pgsBar.visibility = View.VISIBLE
-                LogearUsuario()
+                logearUsuario()
             }
         }
     }
@@ -129,7 +127,7 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
         return valid
     }
 
-    fun txtClick(view: View?) {
+    fun txtClick() {
         val i = Intent(applicationContext, ForgotPass::class.java)//lanza la siguiente actividad
         startActivity(i)
     }

@@ -3,29 +3,26 @@ package com.example.davidblanco.projectod
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.support.v4.app.Fragment
 import android.support.v4.content.PermissionChecker.checkSelfPermission
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.android.synthetic.main.fragment_stadistic.*
 import kotlinx.android.synthetic.main.fragment_stadistic.view.*
 import org.apache.poi.hssf.usermodel.HSSFCellStyle
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.hssf.util.HSSFColor
 import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import java.io.File
 import java.io.FileOutputStream
@@ -38,9 +35,9 @@ class StadisticFragment : Fragment(), View.OnClickListener {
     private val WRITE_EXTERNAL_STORAGE_CODE = 1
     val database = FirebaseDatabase.getInstance()
     val myRef = database.getReference("ProyectosReady")
-    private var projects: ArrayList<Project> = ArrayList<Project>()
-    var escuela = "";
-    var tipo = 0;
+    private var projects: ArrayList<Project> = ArrayList()
+    var escuela = ""
+    var tipo = 0
 
     override fun onClick(v: View?) {
         if (validate()) {
@@ -57,7 +54,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 saveToFile(requireContext())
             } else {
-                Toast.makeText(context, "Es necesario otorgar permisos de almacenamiento", Toast.LENGTH_LONG)
+                Toast.makeText(context, "Es necesario otorgar permisos de almacenamiento", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -107,7 +104,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
 
     private fun saveToFile(context: Context) {
         val wb = HSSFWorkbook()
-        var c: Cell? = null
+        var c: Cell?
 
         //Cell style for header row
         val cs = wb.createCellStyle()
@@ -163,7 +160,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
         cd.wrapText = true
 
         for (i in projects.indices) {
-            val row = sheet1!!.createRow(i + 1)
+            val row:Row = sheet1.createRow(i + 1)
             // row.height=700
             c = row.createCell(0)
             c.setCellValue(dateFormat(projects[i].fecha))
@@ -209,7 +206,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
         }
         val timeStap = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis())
         val fileName: String = "Mis Proyectos " + timeStap + ".xls"
-        var os: FileOutputStream? = null
+        val os: FileOutputStream?
         try {
             val path: File = Environment.getExternalStorageDirectory()
             val dir: File = File("" + path + "/Mis Proyectos/")
@@ -245,21 +242,21 @@ class StadisticFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var contA = 0;
-                var contM = 0;
-                var contB = 0;
-                var contN = 0;
+                var contA = 0
+                var contM = 0
+                var contB = 0
+                var contN = 0
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.fecha >= fechaI2 && pjt.fecha <= fechaF2) {
                         if (pjt.tipo == 1) {
-                            contA++;
+                            contA++
                         } else if (pjt.tipo == 2) {
-                            contM++;
+                            contM++
                         } else if (pjt.tipo == 3) {
-                            contB++;
+                            contB++
                         } else {
-                            contN++;
+                            contN++
                         }
                     }
                 }
@@ -284,21 +281,21 @@ class StadisticFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var contA = 0;
-                var contM = 0;
-                var contB = 0;
-                var contN = 0;
+                var contA = 0
+                var contM = 0
+                var contB = 0
+                var contN = 0
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.fecha >= fechaI && pjt.fecha <= fechaF) {
                         if (pjt.tipo == 1) {
-                            contA++;
+                            contA++
                         } else if (pjt.tipo == 2) {
-                            contM++;
+                            contM++
                         } else if (pjt.tipo == 3) {
-                            contB++;
+                            contB++
                         } else {
-                            contN++;
+                            contN++
                         }
                     }
                 }
@@ -332,20 +329,20 @@ class StadisticFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var contA = 0;
-                var contM = 0;
-                var contB = 0;
-                var contN = 0;
+                var contA = 0
+                var contM = 0
+                var contB = 0
+                var contN = 0
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.tipo == 1) {
-                        contA++;
+                        contA++
                     } else if (pjt.tipo == 2) {
-                        contM++;
+                        contM++
                     } else if (pjt.tipo == 3) {
-                        contB++;
+                        contB++
                     } else {
-                        contN++;
+                        contN++
                     }
                 }
                 v.txtAltaMes.setText("Prioridad Alta: " + contA)
@@ -376,13 +373,13 @@ class StadisticFragment : Fragment(), View.OnClickListener {
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                     if (pjt.tipo == 1) {
-                        contA++;
+                        contA++
                     } else if (pjt.tipo == 2) {
-                        contM++;
+                        contM++
                     } else if (pjt.tipo == 3) {
-                        contB++;
+                        contB++
                     } else {
-                        contN++;
+                        contN++
                     }
                 }
                 v.txtAltaAño.setText("Prioridad Alta: " + contA)
@@ -395,7 +392,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
     }
 
     private fun mostrarDatos() {
-        var sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = this.activity!!.getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
         escuela = sharedPreferences.getString("escuela", "escuela")
         tipo = sharedPreferences.getInt("tipo", 1)
 
@@ -439,7 +436,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
                     if(pjt.fecha>=fechaI2 && pjt.fecha<=fechaF2){
                     projects.add(pjt)
                 }
@@ -453,7 +450,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
     private fun validatePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(requireContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                var permissions: Array<String> = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                val permissions: Array<String> = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 requestPermissions(permissions, WRITE_EXTERNAL_STORAGE_CODE)
             } else {
                 saveToFile(requireContext())
@@ -465,10 +462,10 @@ class StadisticFragment : Fragment(), View.OnClickListener {
 
     private fun dateFormat(fecha: Int): String {
         val cadena = "" + fecha
-        val d = cadena.toCharArray()
+        cadena.toCharArray()
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +
                 cadena[5].toString() + "-" + cadena[0].toString() + cadena[1].toString() +
-                cadena[2].toString() + cadena[3].toString();
+                cadena[2].toString() + cadena[3].toString()
     }
 
     private fun generarInforme2() {
@@ -508,7 +505,7 @@ class StadisticFragment : Fragment(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
-                    var pjt: Project = snapshot.getValue(Project::class.java)!!
+                    val pjt: Project = snapshot.getValue(Project::class.java)!!
                         projects.add(pjt)
                 }
                 validatePermission()

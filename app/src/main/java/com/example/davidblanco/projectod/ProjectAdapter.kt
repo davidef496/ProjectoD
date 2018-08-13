@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Scroller
 import android.widget.TextView
-import kotlinx.android.synthetic.main.card_view_projects.view.*
 
-class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>(), View.OnClickListener {
+class ProjectAdapter(private val projectList: ArrayList<Project>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>(), View.OnClickListener {
     private var listener: View.OnClickListener? = null
 
     fun setOnClickListener(listener: View.OnClickListener) {
@@ -60,6 +58,6 @@ class ProjectAdapter(val projectList: ArrayList<Project>) : RecyclerView.Adapter
         cadena.toCharArray()
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +
                 cadena[5].toString() + "-" + cadena[0].toString() + cadena[1].toString() +
-                cadena[2].toString() + cadena[3].toString();
+                cadena[2].toString() + cadena[3].toString()
     }
 }

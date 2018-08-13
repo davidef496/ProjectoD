@@ -1,8 +1,7 @@
 package com.example.davidblanco.projectod
 
 
-import android.app.FragmentManager
-import android.app.FragmentTransaction
+
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,21 +10,19 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_view_navigation.*
 import kotlinx.android.synthetic.main.app_bar_view_navigation.*
 
 class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    var email: String? = null;
+    var email: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_navigation)
         setSupportActionBar(toolbar)
-        var sharedPreferences: SharedPreferences =getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences =getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
         email = sharedPreferences.getString("email","email")
         val fm: android.support.v4.app.FragmentManager? = getSupportFragmentManager()
         fm!!.beginTransaction().replace(R.id.container, ProjectFragment()).commit()
@@ -71,7 +68,7 @@ class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             }
             R.id.nav_profile -> {
                 var second: ProfileFragment = ProfileFragment()
-                var bundle: Bundle = Bundle();
+                var bundle: Bundle = Bundle()
                 bundle.putString("Email", email)
                 second.setArguments(bundle)
               fm!!.beginTransaction().replace(R.id.container, second).commit()
@@ -88,7 +85,7 @@ class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 editor.putBoolean("sesion", false)
                 editor.commit()
                 val viewLogin = Intent(applicationContext, ViewLogin::class.java)//lanza la siguiente actividad
-                this.finish();
+                this.finish()
                 startActivity(viewLogin)
             }
         }
