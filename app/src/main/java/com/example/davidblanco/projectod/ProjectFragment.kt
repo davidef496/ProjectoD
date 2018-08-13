@@ -133,7 +133,6 @@ class ProjectFragment : Fragment(), View.OnClickListener {
                         Toast.LENGTH_SHORT).show()
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     var pjt: Project = snapshot.getValue(Project::class.java)!!
                         projects.add(pjt)

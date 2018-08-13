@@ -47,10 +47,6 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
                     if (task.isSuccessful) {
                         guardarDatos();
                         Log.d(TAG, "signInWithEmail:success")
-                        val i = Intent(applicationContext, ViewNavigation::class.java)//lanza la siguiente actividad
-                        // i.putExtra("Email",txtUsuario.text.toString())
-                        this.finish()
-                        startActivity(i)
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -68,24 +64,27 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
         var editor: SharedPreferences.Editor = sharedPreferences.edit()
         var pjt: User;
         var query = myRef.orderByChild("email").equalTo(txtUsuario.text.toString())
-        query.addValueEventListener(object : ValueEventListener {
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(dataSnapshot: DatabaseError) {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                user.removeAll(user)
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     pjt = snapshot.getValue(User::class.java)!!
                     user.add(pjt)
-                    Log.d(TAG, "email: "+pjt.email)
+                    editor.putString("email", pjt.email)
+                    editor.putString("clave", pjt.contraseña)
+                    editor.putString("escuela", pjt.escuela)
+                    editor.putString("nombre", pjt.nombre)
+                    editor.putInt("tipo", pjt.tipo)
+                    editor.putBoolean("sesion", true)
+                    editor.commit()
                 }
-
-                editor.putString("email", user[0].email)
-                editor.putString("clave", user[0].contraseña)
-                editor.putString("escuela", user[0].escuela)
-                editor.putString("nombre", user[0].nombre)
-                editor.putInt("tipo", user[0].tipo)
-                editor.putBoolean("sesion", true)
-                editor.commit()
+                val i = Intent(applicationContext, ViewNavigation::class.java)//lanza la siguiente actividad
+                // i.putExtra("Email",txtUsuario.text.toString())
+                startActivity(i)
+                this@ViewLogin.finish()
 
             }
         })
