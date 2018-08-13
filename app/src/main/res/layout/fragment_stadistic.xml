@@ -157,6 +157,7 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
             <EditText
+                android:id="@+id/etxtDayI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="DD"
@@ -168,6 +169,7 @@
                 android:text="/"
                 android:textSize="20dp"/>
             <EditText
+                android:id="@+id/etxtMonthI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="MM"
@@ -179,6 +181,7 @@
                 android:text="/"
                 android:textSize="20dp"/>
             <EditText
+                android:id="@+id/etxtYearI"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="AAAA"
@@ -187,6 +190,7 @@
                 android:inputType="number"/>
 
             <EditText
+                android:id="@+id/etxtDayF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="DD"
@@ -198,6 +202,7 @@
                 android:text="/"
                 android:textSize="20dp"/>
             <EditText
+                android:id="@+id/etxtMonthF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="MM"
@@ -209,6 +214,7 @@
                 android:text="/"
                 android:textSize="20dp"/>
             <EditText
+                android:id="@+id/etxtYearF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="AAAA"
@@ -218,6 +224,7 @@
                 />
         </LinearLayout>
         <Button
+            android:id="@+id/btnInforme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Generar Informe"

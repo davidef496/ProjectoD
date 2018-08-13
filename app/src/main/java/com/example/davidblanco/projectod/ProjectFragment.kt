@@ -29,7 +29,6 @@ class ProjectFragment : Fragment(), View.OnClickListener {
     val myRef = database.getReference("Proyectos")
     val myRef2 = database.getReference("Avisos")
     private var projects: ArrayList<Project> = ArrayList<Project>()
-    private var project: ArrayList<Project> = ArrayList<Project>()
     private var adapter: ProjectAdapter? = null
     private var pro: Project = Project();
     var escuela: String = ""
