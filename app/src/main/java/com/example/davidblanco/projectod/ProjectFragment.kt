@@ -43,6 +43,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
         bundle.putInt("fecha", projects.get(recyclerView1.getChildAdapterPosition(v)).fecha)
         bundle.putInt("tipo", projects.get(recyclerView1.getChildAdapterPosition(v)).tipo)
         bundle.putString("email", projects.get(recyclerView1.getChildAdapterPosition(v)).email)
+        bundle.putString("comentario", projects.get(recyclerView1.getChildAdapterPosition(v)).comentario)
         val fm: FragmentManager? = fragmentManager
         val fm2: FragmentTransaction? = fm!!.beginTransaction()
         val second: ViewProjectFragment = ViewProjectFragment()
@@ -167,9 +168,9 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(snapshot: DataSnapshot in dataSnapshot.children) {
                     val pjt: Project = snapshot.getValue(Project::class.java)!!
-                    Log.d("PROJECTFRAGMENT", "PRJ")
-                   projects.add(pjt)
-
+                    if(pjt.comentario.equals("")) {
+                        projects.add(pjt)
+                    }
                 }
                 adapter!!.notifyDataSetChanged()
             }

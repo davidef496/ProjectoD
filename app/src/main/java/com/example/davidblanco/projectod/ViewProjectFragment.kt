@@ -12,10 +12,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_view_project.view.*
 import kotlinx.android.synthetic.main.comment_dialog.view.*
-
 
 
 class ViewProjectFragment : Fragment(), View.OnClickListener {
@@ -34,7 +34,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
             builder.setTitle("Finalizar proyecto")
                     .setMessage("¿El proyecto se ejecutó?, si desea puede agregar un comentario")
             builder.setPositiveButton("SI") { dialog, which ->
-                moveElements()
+                moveElements2()
                 dialog.dismiss()
             }
             builder.setNegativeButton("NO") { dialog, which ->
@@ -45,10 +45,9 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
                 val mBuilder = AlertDialog.Builder(context).setView(mDialogView)
                 val mAlertDialog = mBuilder.show()
                 mDialogView.btnSendComment.setOnClickListener {
-                    prj.comentario = mDialogView.etxtDescripcion2.text.toString()
+                    prj.comentario = prj.comentario + "\n" + mDialogView.etxtDescripcion2.text.toString()
                     moveElements()
                     mAlertDialog.dismiss()
-
                 }
                 mDialogView.btncancel2.setOnClickListener {
                     mAlertDialog.dismiss()
@@ -80,18 +79,29 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
     }
 
     private fun moveElements() {
+        if (tipo == 0) {
+            moveElements2()
+        } else {
+            myRef.child(prj.key).setValue(prj)
+            volverAtras()
+        }
+
+
+    }
+
+    private fun moveElements2() {
         val key = myRef2.push().key
         key2 = prj.key
         val prj2 = Project(key!!, prj.titulo, prj.descripcion, prj.escuela, prj.fecha, prj.tipo, prj.email, prj.comentario)
-
         myRef2.child(key).setValue(prj2)
         deleteElements(prj)
+
     }
 
     private fun deleteElements(pj: Project) {
-        if(!pj.escuela.equals("Departamento de educación")) {
+        if (!pj.escuela.equals("Departamento de educación")) {
             myRef.child(pj.key).removeValue()
-        }else{
+        } else {
             myRef3.child(pj.key).removeValue()
         }
         volverAtras()
@@ -113,16 +123,16 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
         view.btnVolver2.setOnClickListener(this)
         val bundle = getArguments()
         prj = Project(bundle!!.getString("key"), bundle.getString("titulo"), bundle.getString("descripcion"),
-                bundle.getString("escuela"), bundle.getInt("fecha"), bundle.getInt("tipo"), bundle.getString("email"))
+                bundle.getString("escuela"), bundle.getInt("fecha"), bundle.getInt("tipo"), bundle.getString("email"), bundle.getString("comentario"))
         view.txtViewT.setText(prj.titulo)
         view.txtViewD.setText(prj.descripcion)
         view.txtSchoolV.setText(prj.escuela)
         view.txtFechaV.setText(dateFormat(prj.fecha))
         mostrarDatos()
         if (prj.escuela.equals("Departamento de educación")) {
-            if(tipo == 0) {
+            if (tipo == 0) {
                 view.btnDelete2.visibility = View.VISIBLE
-            }else {
+            } else {
                 view.btnDelete2.visibility = View.INVISIBLE
             }
             view.btnCheck2.visibility = View.INVISIBLE
@@ -140,6 +150,7 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
+
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (position == 1) {
                         prj.tipo = 1
@@ -152,13 +163,17 @@ class ViewProjectFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
-
+        if (!prj.comentario.equals("")) {
+            view.txtViewC.visibility = view.visibility
+            view.txtViewTC.visibility = view.visibility
+            view.txtViewC.text = prj.comentario
+        }
         return view
     }
 
     private fun dateFormat(fecha: Int): String {
         val cadena = "" + fecha
-       cadena.toCharArray()
+        cadena.toCharArray()
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +
                 cadena[5].toString() + "-" + cadena[0].toString() + cadena[1].toString() +
                 cadena[2].toString() + cadena[3].toString()
