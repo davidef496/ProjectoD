@@ -18,10 +18,6 @@
             android:icon="@drawable/ic_equalizer_orange"
             android:title="Estadísticas" />
             <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_error_outline_orange"
-                android:title="Acerca de" />
-            <item
                 android:id="@+id/nav_signOff"
                 android:icon="@drawable/ic_exit_to_app_orange"
                 android:title="Cerrar sesión" />

@@ -32,7 +32,11 @@ class ProfileFragment : Fragment(){
     }
 
     private fun cargarDatos() {
-        val user=User("David Blanco",email,"Liceo Pablo Neruda","12345",0)
+        var user=User("David Blanco A.","CiroProject@app.cl","Universidad de la frontera","12345",1)
+        myRef.push().setValue(user)
+        user=User("Luis Eduardo Gomez.","luis.educacion@gmail.com","Jardin gotitas","12345",0)
+        myRef.push().setValue(user)
+        user=User("Javiera Perez K.","javiera.direc@gmail.com","Colegio San sebastian","12345",1)
         myRef.push().setValue(user)
     }
 

@@ -4,10 +4,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 
-class ProjectAdapter(private val projectList: ArrayList<Project>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>(), View.OnClickListener {
+class ProjectAdapter(val projectList: MutableList<Project>,var lisFilter: MutableList<Project>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>(), View.OnClickListener, Filterable {
+    constructor(projectList: MutableList<Project>):this(projectList,projectList)
+
     private var listener: View.OnClickListener? = null
 
     fun setOnClickListener(listener: View.OnClickListener) {
@@ -59,5 +63,33 @@ class ProjectAdapter(private val projectList: ArrayList<Project>) : RecyclerView
         return cadena[6].toString() + cadena[7].toString() + "-" + cadena[4].toString() +
                 cadena[5].toString() + "-" + cadena[0].toString() + cadena[1].toString() +
                 cadena[2].toString() + cadena[3].toString()
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                var charString = constraint.toString()
+                if (charString.isEmpty()) {
+                    lisFilter = projectList
+                } else {
+                    var filteredList = mutableListOf<Project>()
+                    for (p: Project in projectList) {
+                        if (p.titulo.toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(p)
+                        }
+                    }
+                    lisFilter = filteredList
+                }
+                var filterResults = FilterResults()
+                filterResults.values = lisFilter
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                lisFilter = results!!.values as MutableList<Project>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

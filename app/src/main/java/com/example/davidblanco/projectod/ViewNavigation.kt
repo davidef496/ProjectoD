@@ -76,9 +76,6 @@ class ViewNavigation : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             R.id.nav_stadistic -> {
                 fm!!.beginTransaction().replace(R.id.container, StadisticFragment()).commit()
             }
-            R.id.nav_about -> {
-                fm!!.beginTransaction().replace(R.id.container, AboutFragment()).commit()
-            }
             R.id.nav_signOff -> {
                 var sharedPreferences: SharedPreferences = getSharedPreferences("Credenciales", Context.MODE_PRIVATE)
                 var editor: SharedPreferences.Editor = sharedPreferences.edit()

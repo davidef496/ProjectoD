@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ValueEventListener
 import android.content.SharedPreferences
+import android.text.Editable
+import android.text.TextWatcher
 
 
 class ProjectFragment : Fragment(), View.OnClickListener {
@@ -34,6 +36,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
     private var escuela: String = ""
     private var tipo = 1
     private var email: String = ""
+    private var validate=0;
     override fun onClick(v: View?) {
         val bundle: Bundle = Bundle()
         bundle.putString("titulo", projects.get(recyclerView1.getChildAdapterPosition(v)).titulo)
@@ -119,6 +122,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
+                validate=1;
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     val pjt: Project = snapshot.getValue(Project::class.java)!!
                     projects.add(pjt)
@@ -133,11 +137,15 @@ class ProjectFragment : Fragment(), View.OnClickListener {
                         Toast.LENGTH_SHORT).show()
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(validate==0){
+                    leerDatos()
+                }
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     val pjt: Project = snapshot.getValue(Project::class.java)!!
                         projects.add(pjt)
                 }
                 adapter!!.notifyDataSetChanged()
+                validate=0;
             }
         })
     }
@@ -149,6 +157,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             }
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 projects.removeAll(projects)
+                validate=1;
                 for (snapshot: DataSnapshot in dataSnapshot.children) {
                     val pjt: Project = snapshot.getValue(Project::class.java)!!
 
@@ -166,6 +175,9 @@ class ProjectFragment : Fragment(), View.OnClickListener {
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(validate==0){
+                    leerDatos2()
+                }
                 for(snapshot: DataSnapshot in dataSnapshot.children) {
                     val pjt: Project = snapshot.getValue(Project::class.java)!!
                     if(pjt.comentario.equals("")) {
@@ -173,6 +185,7 @@ class ProjectFragment : Fragment(), View.OnClickListener {
                     }
                 }
                 adapter!!.notifyDataSetChanged()
+                validate=0;
             }
         })
 

@@ -127,7 +127,7 @@ class ViewLogin : AppCompatActivity(), View.OnClickListener {
         return valid
     }
 
-    fun txtClick() {
+    fun txtClick(v:View?) {
         val i = Intent(applicationContext, ForgotPass::class.java)//lanza la siguiente actividad
         startActivity(i)
     }

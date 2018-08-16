@@ -20,6 +20,8 @@ class ForgotPass : AppCompatActivity(), View.OnClickListener  {
             mAuth!!.sendPasswordResetEmail(email).addOnCompleteListener(this){
                 task ->
                 if(task.isSuccessful){
+                    Toast.makeText(this, "Email enviado con exito!",
+                            Toast.LENGTH_SHORT).show()
                     val i = Intent(applicationContext, ViewLogin::class.java)//lanza la siguiente actividad
                     this.finish()
                     startActivity(i)
@@ -28,9 +30,6 @@ class ForgotPass : AppCompatActivity(), View.OnClickListener  {
                             Toast.LENGTH_SHORT).show()
                 }
             }
-        }else{
-            Toast.makeText(this, "Error al enviar el email 222",
-                    Toast.LENGTH_SHORT).show()
         }}
     }
 
